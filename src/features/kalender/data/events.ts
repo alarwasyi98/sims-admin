@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { type CalendarEvent, type EventCategory } from './schema'
+import { type CalendarEvent } from './schema'
 
 faker.seed(33333)
 
