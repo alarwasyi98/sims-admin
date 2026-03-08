@@ -118,6 +118,10 @@ export const sidebarData: SidebarData = {
               title: 'Diskon & Subsidi',
               url: '/spp/diskon',
             },
+            {
+              title: 'Laporan',
+              url: '/spp/laporan',
+            },
           ],
         },
         {
