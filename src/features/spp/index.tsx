@@ -82,9 +82,12 @@ import {
     MoreHorizontal,
     Pencil,
     Trash2,
+    Upload,
+    Download,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { DataTableToolbar, DataTablePagination, DataTableColumnHeader } from '@/components/data-table'
+import { SppImportDialog, SppExportDialog } from './components/spp-dialogs'
 
 import { determineSppStatus } from './utils/calculations'
 faker.seed(99999)
@@ -181,6 +184,7 @@ const lineConfig: ChartConfig = {
 
 export function ManajemenSPP() {
     const navigate = useNavigate()
+    const [dialog, setDialog] = useState<'import' | 'export' | null>(null)
     const [payments, setPayments] = useState<SppPayment[]>(initialPayments)
     const [rowSelection, setRowSelection] = useState({})
     const [sorting, setSorting] = useState<SortingState>([])
@@ -360,9 +364,17 @@ export function ManajemenSPP() {
                     title='Pembayaran Siswa'
                     description='Kelola tagihan dan pembayaran SPP siswa.'
                 >
-                    <Button className='gap-1.5' onClick={() => navigate({ to: '/spp/tambah-pembayaran' })}>
-                        <Receipt size={16} /> Tambah
-                    </Button>
+                    <div className='flex gap-2'>
+                        <Button variant='outline' className='gap-1.5' onClick={() => setDialog('import')}>
+                            <Upload size={16} /> Import
+                        </Button>
+                        <Button variant='outline' className='gap-1.5' onClick={() => setDialog('export')}>
+                            <Download size={16} /> Eksport
+                        </Button>
+                        <Button className='gap-1.5' onClick={() => navigate({ to: '/spp/tambah-pembayaran' })}>
+                            <Receipt size={16} /> Tambah
+                        </Button>
+                    </div>
                 </PageHeader>
 
                 <div className='grid gap-4 sm:grid-cols-3'>
@@ -644,9 +656,8 @@ export function ManajemenSPP() {
                 </div>
             </div>
 
-
-
-
+            <SppImportDialog open={dialog === 'import'} onOpenChange={(v) => setDialog(v ? 'import' : null)} />
+            <SppExportDialog open={dialog === 'export'} onOpenChange={(v) => setDialog(v ? 'export' : null)} />
         </>
     )
 }
